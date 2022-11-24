@@ -15,24 +15,30 @@ async function initialize() {
 
 
     // MYSQL
-    
+
     // const connection = await mysql.createConnection({ host, port, user, password });
     // await connection.query(`CREATE DATABASE IF NOT EXISTS \`${database}\`;`);
     // const sequelize = new Sequelize(database, user, password, { host: host, dialect: 'mysql' });
 
-    // POSTGRES  
+    // POSTGRES
     const sequelize = new Sequelize(database, user, password, { host: host, dialect: 'postgres',  dialectOptions: {
         ssl: true
     }});
 
-    
+
     // init models and add them to the exported db object
     db.Account = require('../accounts/account.model')(sequelize);
     db.RefreshToken = require('../accounts/refresh-token.model')(sequelize);
+    db.Servicio = require('../servicios/servicio.model')(sequelize);
+    db.Reserva = require('../reservas/reserva.model')(sequelize);
     //define relationships
 
     db.Account.hasMany(db.RefreshToken, { onDelete: 'CASCADE' });
     db.RefreshToken.belongsTo(db.Account);
+
+    db.Account.hasMany(db.Reserva);
+    db.Reserva.belongsTo(db.Account);
+
     // db.Condominio.hasMany(db.Edificio, { onDelete: 'CASCADE', onUpdate: 'CASCADE' });
     // db.Edificio.hasMany(db.Departamento, { onDelete: 'CASCADE', onUpdate: 'CASCADE' });
     // db.Departamento.hasMany(db.Multa, { onDelete: 'CASCADE', onUpdate: 'CASCADE' });

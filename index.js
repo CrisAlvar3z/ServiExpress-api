@@ -28,6 +28,8 @@ app.use(cors({ origin: (origin, callback) => callback(null, true), credentials: 
 // api routes
 // app.use('/vehiculos', require('./vehiculos/vehiculos.controller'));
 app.use('/accounts', require('./accounts/accounts.controller'));
+app.use('/servicios', require('./servicios/servicios.controller'));
+app.use('/reservas', require('./reservas/reserva.controller'));
 // app.use('/domicilios', require('./domicilio/domicilio.controller'));
 // app.use('/arriendos', require('./arriendos/arriendos.controller'));
 // app.use('/transbank', require('./transbank/webpay_plus_controller'));
@@ -38,7 +40,8 @@ app.use(errorHandler);
 const port = process.env.NODE_ENV === 'production' ? (process.env.PORT || 8080) : 8080;
 app.listen(port, () => console.log('Server listening on port ' + port));
 
-
+var d = new Date(Date.now());
+console.log(d.toString())
 // const express = require('express');
 // const cors = require("cors");
 // const bodyParser = require('body-parser');
